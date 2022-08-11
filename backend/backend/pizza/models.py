@@ -1,3 +1,5 @@
+from distutils.command.upload import upload
+from email.policy import default
 from django.db import models
 
 # Create your models here.
@@ -11,6 +13,7 @@ class Pizza(models.Model):
     ]
     name = models.CharField(max_length=120 ,choices=choices)
     price = models.DecimalField(default=0,max_digits=3 , decimal_places=2)
+    pic = models.ImageField(upload_to = "pizza-pics" , null = True , default = None)
     pizzeria = models.ManyToManyField('Pizzeria' , related_name='pizzas')
     custom = models.BooleanField(default=False)
     def __str__(self):
