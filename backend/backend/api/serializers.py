@@ -13,4 +13,4 @@ class PizzeriaSerializer(serializers.ModelSerializer):
     pizzas = PizzaSerializer(many=True)
     class Meta : 
         model = Pizzeria
-        fields = ['city','pizzas']
+        fields = ['id','city','pizzas']
