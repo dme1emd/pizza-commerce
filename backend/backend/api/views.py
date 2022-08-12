@@ -8,7 +8,7 @@ def PizzeriaPizzasApiView(request , pk):
     serializer = PizzeriaSerializer(instance=pizzeria,many = False , context={'request': request}).data
     return response.Response(serializer,status=200)
 @decorators.api_view(['GET'])
-def SearchPizzeria(request,city):
+def SearchPizzeria(request,city=None):
     queryset = Pizzeria.objects.filter(city__icontains = city)
-    serializer = PizzeriaSerializer(queryset , many = True).data
+    serializer = PizzeriaSerializer(queryset , many = True,context={'request': request}).data
     return response.Response(data=serializer ,status=200)
