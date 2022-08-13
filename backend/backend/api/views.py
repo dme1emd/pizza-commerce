@@ -12,3 +12,8 @@ def SearchPizzeria(request,city=None):
     queryset = Pizzeria.objects.filter(city__icontains = city)
     serializer = PizzeriaSerializer(queryset , many = True,context={'request': request}).data
     return response.Response(data=serializer ,status=200)
+@decorators.api_view(['GET'])
+def IngredientsApiView(request,city=None):
+    queryset = Ingredient.objects.all()
+    serializer = IngredientSerializer(queryset , many = True).data
+    return response.Response(data=serializer ,status=200)
