@@ -8,7 +8,7 @@
     height: 20rem;
     width: 20rem;
     position: relative;
-    background:linear-gradient(transparent,rgba(0, 0, 0, 0.68));
+    background:linear-gradient(transparent,rgba(0, 0, 0, 0.76));
     border-radius:2rem;
     overflow:hidden;
     margin:2rem 0;
@@ -33,7 +33,7 @@
     justify-content: space-between;
     align-items:center;
     width: 100%;
-    padding:.5rem 1.5rem 1.5rem 1.5rem;
+    padding:.5rem 1rem 1.5rem 1rem;
 }
 .pizza-scroll h2{
     margin: 0 0 .5rem 1rem;
@@ -67,6 +67,29 @@ button.add-pizza{
 .price{
     font-size: 2em;
 }
+form{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 1rem;
+    color: white;
+}
+form div{
+    margin: 20px 0;
+    font-size: 1.6em;
+}
+form div label{
+    margin-left:30px;
+}
+.total-add{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    color:white;
+}
+input[type="checkbox"]{
+    accent-color: rgb(255, 128, 0);
+}
 @media screen and (min-width :620px){
     .pizzas-container{
         padding:1rem 0;
@@ -75,6 +98,13 @@ button.add-pizza{
         margin:2rem 3rem;
         height:23em;
         width: 23em;
+    }
+    .total-add{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    .max-wd{
+        max-width: 300px;
     }
 }
 @media screen and (min-width :820px){

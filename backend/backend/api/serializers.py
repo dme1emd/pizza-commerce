@@ -3,7 +3,7 @@ from pizza.models import *
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta : 
         model = Ingredient
-        fields = ['name']
+        fields = ['name','price']
 class PizzaSerializer(serializers.ModelSerializer):
     ingredients = IngredientSerializer(many=True)
     class Meta:

@@ -6,6 +6,7 @@ from django.db import models
 class Pizza(models.Model):
     choices =[
         ('Pizza Marguerita','Pizza Marguerita'),
+        ('Pizza Marguerita','Pizza Marguerita'),
         ('Neapolitan Pizza','Neapolitan Pizza'),
         ('Chicago Pizza','Chicago Pizza'),
         ('Greek Pizza','Greek Pizza'),
@@ -22,10 +23,12 @@ class Ingredient(models.Model):
     choices =[
         ('olives','olives'),
         ('cheese','cheese'),
-        ('salsa','salsa')
+        ('Chorizo','Chorizo'),
+        ('pineapple','pineapple'),
     ]
     name = models.CharField(max_length=100 , choices=choices)
-    pizza = models.ManyToManyField(Pizza,related_name='ingredients')
+    pizza = models.ManyToManyField(Pizza,related_name='ingredients',blank=True)
+    price = models.DecimalField(default=0,max_digits=3 , decimal_places=2)
     def __str__(self):
         return self.name
 class Pizzeria(models.Model):
@@ -46,5 +49,5 @@ class OrderPizza(models.Model):
     def __str__(self):
         return f"{self.pizza.name}*{self.quantity}"
 class Order(models.Model):
-    total_price = models.IntegerField(default=0)
+    total_price = models.DecimalField(default=0,max_digits=3 , decimal_places=2)
     adress = models.CharField(max_length=150)
