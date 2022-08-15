@@ -1,8 +1,9 @@
-import React, { useContext, useLayoutEffect, useState } from 'react'
+import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import DomainContext from '../context/DomainContext'
 export const CustomPizza = () => {
   const {domain}=useContext(DomainContext)
   const [ingredients , setIngredients] = useState([])
+  const [selected , setSelected] = useState([])
   const [total , setTotal] = useState(0.00)
   const getIngredients = async()=>{
     const response = await fetch(`${domain}ingredients/`)
@@ -26,15 +27,18 @@ export const CustomPizza = () => {
       const cart = {}
       document.cookie = 'cart='+JSON.stringify(cart)+';domain=;path=/'
     }
+    return cart
   }
   const addCookieItem = (pizza , action)=>{
     if(action == 'add'){
       var cart = ParseCartOrCreate()
       if(cart[pizza]==undefined){
-        cart.pizza = {quantity:1 , custom : pizza.includes(';')}
-        return
+        cart[pizza] = {quantity:1 , custom : pizza.includes('m')}
       }
-      cart[pizza]+=1
+      else{
+        cart[pizza]+=1
+      }
+
     }
     if(action=='remove'){
       var cart = ParseCartOrCreate()
@@ -45,14 +49,19 @@ export const CustomPizza = () => {
     }
     document.cookie = 'cart='+JSON.stringify(cart)+';domain=;path=/'
   }
-  const createCustomPizzaId=(pizza)=>{
-    const id = ''
-    pizza.ingredients.map((eng)=>{
-      id=`${eng.id};${id}`
+  const createCustomPizzaId=(ingredients)=>{
+    var id = ''
+    ingredients.map((eng)=>{
+      id=`${eng.id}m${id}`
     })
+    console.log(id)
     return id
   }
+  const handleAdd =()=>{
+    addCookieItem(createCustomPizzaId(selected),'add')
+  }
   useLayoutEffect(()=>{getIngredients()},[])
+  useEffect(()=>{console.log(selected)},[selected])
   return (
     <div>
       <form>
@@ -61,18 +70,17 @@ export const CustomPizza = () => {
           <input type='checkbox' id={`ing-${ing.name}`} onChange={
             (e)=>{
               e.target.checked ? setTotal(Number(total)+Number(ing.price)):setTotal(Number(total)-Number(ing.price))
+              e.target.checked ? setSelected([...selected , ing]) : setSelected(selected.filter(elem => elem != ing))
             }
             }/>
           <label>{ing.name}</label>
         </div>
         )
       })}
-
-
       </form>
       <div className='total-add'>
         <h2>total : {total} €</h2>
-      <button className='add-pizza max-wd'>add the custom pizza</button>
+      <button className='add-pizza max-wd' onClick={handleAdd}>add the custom pizza</button>
         </div>    
     </div>
   )

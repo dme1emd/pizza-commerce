@@ -90,6 +90,19 @@ form div label{
 input[type="checkbox"]{
     accent-color: rgb(255, 128, 0);
 }
+.nav{
+    width: 100vw;
+    height: 50px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.shoping-icon{
+    color: white;
+    font-size: 1.5em;
+    margin-right:20px;
+}
 @media screen and (min-width :620px){
     .pizzas-container{
         padding:1rem 0;

@@ -2,6 +2,7 @@ import React, { useContext, useLayoutEffect, useState } from 'react'
 import {useParams} from 'react-router-dom'
 import DomainContext from '../context/DomainContext'
 import { CustomPizza } from './CustomPizza'
+import { Nav } from './Nav'
 import { Pizza } from './Pizza'
 export const Pizzeria = () => {
   const [Pizzeria,setPizzeria]=useState()
@@ -16,6 +17,7 @@ export const Pizzeria = () => {
   useLayoutEffect(()=>{getPizzeria()},[])
   return (
     <div>
+      <Nav/>
         {
         showCustom ?<CustomPizza/>
          : 
