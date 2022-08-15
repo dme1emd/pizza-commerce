@@ -15,30 +15,35 @@ export const Pizza = ({pizza}) => {
   const ParseCartOrCreate=()=>{
     const cart = JSON.parse(getCookie('cart'))
     if(cart == undefined){
+      console.log('created')
       const cart = {}
       document.cookie = 'cart='+JSON.stringify(cart)+';domain=;path=/'
     }
+    return cart
   }
-  const addCookieItem = (pizza , action)=>{
+  const addCookieItem = (id , action)=>{
+    console.log(id)
     if(action == 'add'){
       var cart = ParseCartOrCreate()
-      if(cart[pizza]==undefined){
-        cart.pizza = {quantity:1 , custom : pizza.includes(';')}
-        return
+      if(cart[id]==undefined){
+        console.log('ppo')
+        cart[id] = {quantity:1,custom : id.includes(';')}
       }
-      cart[pizza]+=1
+      else{
+        cart[id]['quantity']+=1
+      }
     }
     if(action=='remove'){
       var cart = ParseCartOrCreate()
-      cart.pizza.quantity-=1
-      if(cart.pizza.quantity<=0){
-        delete cart[pizza]
+      cart[id].quantity-=1
+      if(cart[id].quantity<=0){
+        delete cart[id]
       }
     }
     document.cookie = 'cart='+JSON.stringify(cart)+';domain=;path=/'
   }
     const addPizza = ()=>{
-      addCookieItem(pizza.id,'add')
+      addCookieItem(`${pizza.id}`,'add')
     }
   return (
     <div className='pizza-card'>
