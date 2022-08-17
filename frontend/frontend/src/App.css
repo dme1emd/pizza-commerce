@@ -103,6 +103,41 @@ input[type="checkbox"]{
     font-size: 1.5em;
     margin-right:20px;
 }
+.commanded-header{
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr;
+    align-items: center;
+}
+.commanded-header h2{
+    font-size: 1.5em;
+}
+.command{
+    color: white;
+    flex-wrap: wrap;
+    width: 100vw;
+}
+.command ul{
+    display: flex;
+    flex-wrap: wrap;
+    align-items:center;
+    padding: 0;
+    width: 100vw;
+}
+.command ul li{
+    list-style: none;
+    margin:1px;
+    background-color:white;
+    color:rgb(185, 185, 185);
+    font-size: .9em;
+    letter-spacing: .4mm;
+}
+.quantity-container{
+    display: flex;
+}
+.arrows{
+    display:flex;
+    flex-direction: column;
+}
 @media screen and (min-width :620px){
     .pizzas-container{
         padding:1rem 0;

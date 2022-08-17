@@ -13,21 +13,21 @@ export const Pizza = ({pizza}) => {
     }
   }
   const ParseCartOrCreate=()=>{
-    const cart = JSON.parse(getCookie('cart'))
+    var cart = JSON.parse(getCookie('cart'))
     if(cart == undefined){
       console.log('created')
-      const cart = {}
+      cart = {}
       document.cookie = 'cart='+JSON.stringify(cart)+';domain=;path=/'
     }
+    console.log(cart)
     return cart
   }
   const addCookieItem = (id , action)=>{
-    console.log(id)
     if(action == 'add'){
       var cart = ParseCartOrCreate()
+      console.log(cart)
       if(cart[id]==undefined){
-        console.log('ppo')
-        cart[id] = {quantity:1,custom : id.includes(';')}
+        cart[id] = {quantity:1,custom : false , name : pizza.name , price : pizza.price}
       }
       else{
         cart[id]['quantity']+=1

@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Command } from './Command'
 import { Nav } from './Nav'
 
 export const Shipping = () => {
@@ -22,6 +23,8 @@ export const Shipping = () => {
     }
     return cart
   }
+  const [pizzas , setPizzas] = useState(Object.keys(ParseCartOrCreate()).map((key)=>{return ParseCartOrCreate()[key]}))
+  console.log(pizzas)
   const addCookieItem = (pizza , action)=>{
     console.log(pizza)
     if(action == 'add'){
@@ -42,10 +45,11 @@ export const Shipping = () => {
     }
     document.cookie = 'cart='+JSON.stringify(cart)+';domain=;path=/'
   }
-  console.log(getCookie('cart'))
   return (
     <div>
       <Nav/>
+      {pizzas.map((pizza)=>{return <Command command={pizza}/>}
+      )}
     </div>
   )
 }
