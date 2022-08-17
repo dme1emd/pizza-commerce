@@ -22,9 +22,9 @@ export const CustomPizza = () => {
     }
   }
   const ParseCartOrCreate=()=>{
-    const cart = JSON.parse(getCookie('cart'))
+    var cart = JSON.parse(getCookie('cart'))
     if(cart == undefined){
-      const cart = {}
+      cart = {}
       document.cookie = 'cart='+JSON.stringify(cart)+';domain=;path=/'
     }
     return cart
@@ -33,7 +33,7 @@ export const CustomPizza = () => {
     if(action == 'add'){
       var cart = ParseCartOrCreate()
       if(cart[pizza]==undefined){
-        cart[pizza] = {quantity:1 , custom : pizza.includes('m')}
+        cart[pizza] = {quantity:1 , custom : true , ingredients : selected.map((sel)=>{return sel.name}),price:total}
       }
       else{
         cart[pizza]+=1
