@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import TotalContext from '../context/TotalContext'
 import { Command } from './Command'
 import { Nav } from './Nav'
-
 export const Shipping = () => {
+  const {total , setTotal} = useContext(TotalContext)
   const getCookie=(name)=>{
     const cookieArr = document.cookie.split(';')
     for (const i = 0 ; i<cookieArr.length ; i++){
@@ -48,8 +49,19 @@ export const Shipping = () => {
   return (
     <div>
       <Nav/>
-      {pizzas.map((pizza)=>{return <Command command={pizza}/>}
+      {
+      pizzas.length > 0 ?
+      <div className='command commanded-header ind'>
+        <h2>pizza</h2>
+        <div>
+          quantity:
+        </div>
+        <div className='quantity'>total :</div>
+      </div>:<h1>YOU HAVE NOT COMMANDED YET</h1>
+      }
+      {pizzas.map((pizza)=>{return <Command command={pizza} key={pizza.id}/>}
       )}
+      {total}
     </div>
   )
 }
