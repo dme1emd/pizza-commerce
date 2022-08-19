@@ -107,6 +107,7 @@ input[type="checkbox"]{
     display: grid;
     grid-template-columns: 3fr 1fr 1fr;
     align-items: center;
+    max-width: 500px;
 }
 .commanded-header h2{
     font-size: 1.5em;
@@ -133,10 +134,33 @@ input[type="checkbox"]{
 }
 .quantity-container{
     display: flex;
+    width: 36px;
+    justify-content: space-between;
+}
+.quantity{
+    font-size: 1.4em;
 }
 .arrows{
     display:flex;
     flex-direction: column;
+}
+.max{
+    animation: max .5S ease-in-out ;
+}
+.ind div:nth-child(2){
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin: 0 20px 0 0;
+}
+@keyframes max {
+    0%{
+        color:white;
+    }
+    50%{
+        color: red;
+        font-size: 1.1em;
+    }
 }
 @media screen and (min-width :620px){
     .pizzas-container{

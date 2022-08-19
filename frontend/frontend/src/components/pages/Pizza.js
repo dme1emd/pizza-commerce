@@ -27,15 +27,20 @@ export const Pizza = ({pizza}) => {
       var cart = ParseCartOrCreate()
       console.log(cart)
       if(cart[id]==undefined){
-        cart[id] = {quantity:1,custom : false , name : pizza.name , price : pizza.price}
+        cart[id] = {quantity:1,custom : false , name : pizza.name , price : pizza.price , id :id}
       }
       else{
+        if(cart[id]['quantity']<=10){
         cart[id]['quantity']+=1
+        }
+        else{
+          return
+        }
       }
     }
     if(action=='remove'){
       var cart = ParseCartOrCreate()
-      cart[id].quantity-=1
+      cart[id]['quantity']-=1
       if(cart[id].quantity<=0){
         delete cart[id]
       }

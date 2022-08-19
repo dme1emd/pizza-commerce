@@ -33,12 +33,16 @@ export const CustomPizza = () => {
     if(action == 'add'){
       var cart = ParseCartOrCreate()
       if(cart[pizza]==undefined){
-        cart[pizza] = {quantity:1 , custom : true , ingredients : selected.map((sel)=>{return sel.name}),price:total}
+        cart[pizza] = {quantity:1 , custom : true , ingredients : selected.map((sel)=>{return sel.name}),price:total , id:pizza}
       }
       else{
-        cart[pizza]+=1
+        if(cart[pizza]['quantity']<=10){
+        cart[pizza]['quantity']+=1
+        }
+        else{
+          return
+        }
       }
-
     }
     if(action=='remove'){
       var cart = ParseCartOrCreate()
