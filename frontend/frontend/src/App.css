@@ -78,7 +78,8 @@ form div{
     font-size: 1.6em;
 }
 form div label{
-    margin-left:30px;
+    margin-left:10px;
+    font-size:.9em;
 }
 .total-add{
     display: flex;
@@ -97,6 +98,10 @@ input[type="checkbox"]{
     justify-content: flex-end;
     align-items: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    position:sticky;
+    top: 0;
+    background-color: rgb(185, 185, 185);
+    z-index: 500;
 }
 .shoping-icon{
     color: white;
@@ -152,6 +157,32 @@ input[type="checkbox"]{
     display: flex;
     align-items: center;
     margin: 0 20px 0 0;
+}
+.total{
+    font-size: 2em;
+    color:white;
+}
+.notif{
+    height: 10px;
+    width:10px;
+    border-radius:50%;
+    background-color: red;
+    position: absolute;
+    top:15px;
+    right:24px;
+}
+button.buy{
+    padding: 10px 15px;
+    font-size:1.5em;
+    background-color: transparent;
+    border:white 1px solid;
+    color: white;
+}
+.flex-buy{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:0 10px;
 }
 @keyframes max {
     0%{

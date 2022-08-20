@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import DomainContext from '../context/DomainContext'
+import TotalContext from '../context/TotalContext'
 export const CustomPizza = () => {
   const {domain}=useContext(DomainContext)
   const [ingredients , setIngredients] = useState([])
   const [selected , setSelected] = useState([])
   const [total , setTotal] = useState(0.00)
+  const {setNotif}=useContext(TotalContext)
   const getIngredients = async()=>{
     const response = await fetch(`${domain}ingredients/`)
     const data = await response.json()
@@ -34,10 +36,12 @@ export const CustomPizza = () => {
       var cart = ParseCartOrCreate()
       if(cart[pizza]==undefined){
         cart[pizza] = {quantity:1 , custom : true , ingredients : selected.map((sel)=>{return sel.name}),price:total , id:pizza}
+        setNotif(true)
       }
       else{
-        if(cart[pizza]['quantity']<=10){
+        if(cart[pizza]['quantity']<10){
         cart[pizza]['quantity']+=1
+        setNotif(true)
         }
         else{
           return

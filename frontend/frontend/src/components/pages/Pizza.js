@@ -1,6 +1,7 @@
-import React from 'react'
-
+import React, { useContext } from 'react'
+import TotalContext from '../context/TotalContext'
 export const Pizza = ({pizza}) => {
+  const {setNotif} = useContext(TotalContext)
   const getCookie=(name)=>{
     const cookieArr = document.cookie.split(';')
     for (const i = 0 ; i<cookieArr.length ; i++){
@@ -27,11 +28,13 @@ export const Pizza = ({pizza}) => {
       var cart = ParseCartOrCreate()
       console.log(cart)
       if(cart[id]==undefined){
+        setNotif(true)
         cart[id] = {quantity:1,custom : false , name : pizza.name , price : pizza.price , id :id}
       }
       else{
-        if(cart[id]['quantity']<=10){
+        if(cart[id]['quantity']<10){
         cart[id]['quantity']+=1
+        setNotif(true)
         }
         else{
           return
