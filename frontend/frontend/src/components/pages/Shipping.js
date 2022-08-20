@@ -1,9 +1,9 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import TotalContext from '../context/TotalContext'
 import { Command } from './Command'
 import { Nav } from './Nav'
 export const Shipping = () => {
-  const {total , setTotal} = useContext(TotalContext)
+  const {total , setTotal,setNotif} = useContext(TotalContext)
   const getCookie=(name)=>{
     const cookieArr = document.cookie.split(';')
     for (const i = 0 ; i<cookieArr.length ; i++){
@@ -25,9 +25,7 @@ export const Shipping = () => {
     return cart
   }
   const [pizzas , setPizzas] = useState(Object.keys(ParseCartOrCreate()).map((key)=>{return ParseCartOrCreate()[key]}))
-  console.log(pizzas)
   const addCookieItem = (pizza , action)=>{
-    console.log(pizza)
     if(action == 'add'){
       var cart = ParseCartOrCreate()
       if(cart[pizza]==undefined){
@@ -46,6 +44,16 @@ export const Shipping = () => {
     }
     document.cookie = 'cart='+JSON.stringify(cart)+';domain=;path=/'
   }
+  const handlePurchase =()=>{
+    console.log("purchasing ...")
+  }
+  useEffect(()=>{
+    const cart = ParseCartOrCreate()
+    var sum = 0
+    Object.entries(cart).map((key)=>{sum = sum+Number(key[1].price)*key[1]['quantity']})
+    setTotal(sum)
+    setNotif(false)
+  },[])
   return (
     <div>
       <Nav/>
@@ -61,7 +69,15 @@ export const Shipping = () => {
       }
       {pizzas.map((pizza)=>{return <Command command={pizza} key={pizza.id}/>}
       )}
-      {total}
+      <div className='flex-buy'>
+        <div className='total'>
+          total : {`${total}`.slice(0,5)} €
+        </div>
+        <button className='buy' onClick={handlePurchase}>
+          purchase
+        </button>
+      </div>
+
     </div>
   )
 }

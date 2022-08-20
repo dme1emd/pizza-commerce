@@ -25,6 +25,9 @@ class Ingredient(models.Model):
         ('cheese','cheese'),
         ('Chorizo','Chorizo'),
         ('pineapple','pineapple'),
+        ('Camembert','Camembert'),
+        ('Provolone','Provolone'),
+
     ]
     name = models.CharField(max_length=100 , choices=choices)
     pizza = models.ManyToManyField(Pizza,related_name='ingredients',blank=True)

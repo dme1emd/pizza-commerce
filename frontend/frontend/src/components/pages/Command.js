@@ -5,6 +5,7 @@ export const Command = ({command}) => {
     const [quantity,setQuantity] = useState(command.quantity)
     const [max , setMax]=useState('')
     const {total ,setTotal} = useContext(TotalContext)
+    const [show, setShow] = useState(true)
     const getCookie=(name)=>{
         const cookieArr = document.cookie.split(';')
         for (const i = 0 ; i<cookieArr.length ; i++){
@@ -36,6 +37,7 @@ export const Command = ({command}) => {
           console.log(cart[pizza]['quantity'])
           if(cart[pizza]["quantity"]<=0){
             delete cart[pizza]
+            setShow(false)
           }
         }
         document.cookie = 'cart='+JSON.stringify(cart)+';domain=;path=/'
@@ -55,8 +57,8 @@ export const Command = ({command}) => {
         addCookieItem(command.id , 'remove')
         setTotal(total-Number(command.price))
     }
-    useEffect(()=>{setTotal(total+Number(command.price)*command['quantity'])},[])
     return(
+        show ? 
         <div>
             
 {            command.custom ? 
@@ -85,5 +87,5 @@ export const Command = ({command}) => {
             </div>
             <div className='quantity'>{`${command.price * quantity}`.slice(0,5)} €</div>
         </div>}
-      </div>)
+      </div>:'')
 }
