@@ -1,9 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
+import DomainContext from '../context/DomainContext'
 import TotalContext from '../context/TotalContext'
 import { Command } from './Command'
 import { Nav } from './Nav'
 export const Shipping = () => {
   const {total , setTotal,setNotif} = useContext(TotalContext)
+  const [showForm , setShowForm] = useState(false)
+  const {domain}=useContext(DomainContext)
+  const [adress , setAdress] =useState('')
   const getCookie=(name)=>{
     const cookieArr = document.cookie.split(';')
     for (const i = 0 ; i<cookieArr.length ; i++){
@@ -45,7 +49,15 @@ export const Shipping = () => {
     document.cookie = 'cart='+JSON.stringify(cart)+';domain=;path=/'
   }
   const handlePurchase =()=>{
-    console.log("purchasing ...")
+    setShowForm(true)
+  }
+  const handleCommand = (e)=>{
+    e.preventDefault()
+    fetch(`${domain}command/`,{
+      method:"POST",
+      headers:{'Content-Type': 'application/json'},
+      body:JSON.stringify({adress:adress , cart : ParseCartOrCreate()})
+  })
   }
   useEffect(()=>{
     const cart = ParseCartOrCreate()
@@ -73,11 +85,20 @@ export const Shipping = () => {
         <div className='total'>
           total : {`${total}`.slice(0,5)} €
         </div>
-        <button className='buy' onClick={handlePurchase}>
-          purchase
-        </button>
+        {
+          total > 0 ? 
+          <button className='buy' onClick={handlePurchase}>
+            purchase
+          </button> :''
+        }
       </div>
-
+        {
+          showForm ? 
+        <form>
+          <input type='text' placeholder='add your adress' value={adress} onChange={(e)=>{setAdress(e.target.value)}}/>
+          <button onClick={handleCommand}> command </button>
+        </form> :''
+        }  
     </div>
   )
 }
