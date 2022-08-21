@@ -52,5 +52,4 @@ class OrderPizza(models.Model):
     def __str__(self):
         return f"{self.pizza.name}*{self.quantity}"
 class Order(models.Model):
-    total_price = models.DecimalField(default=0,max_digits=3 , decimal_places=2)
     adress = models.CharField(max_length=150)

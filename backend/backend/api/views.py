@@ -17,3 +17,21 @@ def IngredientsApiView(request,city=None):
     queryset = Ingredient.objects.all()
     serializer = IngredientSerializer(queryset , many = True).data
     return response.Response(data=serializer ,status=200)
+@decorators.api_view(['POST' , 'GET'])
+def CommandApiView(request,city=None):
+    if request.method == 'POST':
+        print(request.data)
+        data = request.data
+        adress = data.get('adress')
+        command = Order.objects.create(adress = adress)
+        for key in data.get('cart') :
+            pizza = data.get('cart').get(key)
+            if pizza.get('custom'):
+                pizza_order = OrderPizza.objects.create(order = command , pizza = Pizza.objects.create(name='Custom') ,quantity = pizza.get('quantity'))
+                pizza_order.save()
+                print(OrderPizza.objects.all())
+            else :
+                pizza_order = OrderPizza.objects.create(order = command , pizza = Pizza.objects.get(name =pizza.get('name')) , quantity = pizza.get('quantity'))
+                pizza_order.save()
+                print(OrderPizza.objects.all())
+    return response.Response(status=200)
