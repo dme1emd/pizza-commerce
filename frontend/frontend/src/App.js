@@ -8,6 +8,8 @@ import { TotalProvider } from './components/context/TotalContext';
 import {AuthProvider} from './components/context/AuthContext';
 import { Login } from './components/pages/Login';
 import { Signup } from './components/pages/Signup';
+import { ConnectedRoutes } from './components/utils/ConnectedRoutes';
+import { Home } from './components/pages/Home';
 function App() {
   return (
     <div className="App">
@@ -20,7 +22,10 @@ function App() {
                 <Route element={<Pizzeria/>} path='/:pizzeria/'/>
                 <Route element={<Shipping/>} path='/shipping/'/>
                 <Route element={<Signup/>} path='/signup/' exact/>
-                <Route element={<Login/>} path='/login/' exact/>
+                <Route element={<ConnectedRoutes/>}>
+                  <Route element={<Login/>} path='/login/' exact/>
+                </Route>
+                <Route element={<Home/>} path='/admin/'/>
               </Routes>
             </BrowserRouter>
           </AuthProvider> 
