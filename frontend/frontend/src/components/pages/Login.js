@@ -3,34 +3,30 @@ import AuthContext from '../context/AuthContext'
 import jwt_decode from 'jwt-decode'
 import { useEffect,useState } from 'react'
 import { Navigate } from 'react-router-dom'
+import DomainContext from '../context/DomainContext'
 export const Login = () => {
-    const {token , setToken , user , setUser , local , setLocal}= useContext(AuthContext)
+    const {token , setToken ,setPizzeriaId}= useContext(AuthContext)
+    const {domain} = useContext(DomainContext)
     const login =async (e)=>{
         e.preventDefault()
-        const response = await fetch('http://127.0.0.1:8000/api/token/',{
+        const response = await fetch(`${domain}token/`,{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
             },
             body:JSON.stringify({
-                'username': e.target.username.value,
+                'city': e.target.username.value,
                 'password':e.target.password.value
             })
                  
         })
         const tok = await response.json()
-        console.log(response.status)
         if(response.status ===200){
-            localStorage.setItem('token',JSON.stringify(tok))
-            setLocal(localStorage.getItem('token'))
+            localStorage.setItem('jwt',JSON.stringify(tok))
+            setToken(tok)
+            setPizzeriaId(jwt_decode(tok.access).user_id)
         }
     }
-    useEffect(() => {
-        setToken(JSON.parse(local))
-    }, [local])
-    useEffect( ()=>{
-        setUser(token ? jwt_decode(token.access).user_id : null)
-    },[token])
   return (
     <form onSubmit={login}>
         <input name="username" type="text" placeholder='enter your username'/>
